@@ -1,0 +1,108 @@
+Explanation of the Table Structure
+Enterprises Table:
+
+
+id: A unique identifier for each enterprise (auto-increment).
+enterprise_name: The name of the enterprise.
+organisation_type: The type of organisation (e.g., Private Limited Company).
+date_of_incorporation: The date the enterprise was incorporated.
+date_of_udyam_registration: The date of UDYAM registration.
+
+Unit Locations Table:
+
+
+id: A unique identifier for each unit location (auto-increment).
+enterprise_id: A foreign key that references the id in the enterprises table, establishing a relationship between the unit and its enterprise.
+unit_name: The name of the unit.
+flat, building, village_town, block, road, city, pin, state, district: Various address fields for the unit location.
+sn: A serial number for the unit.
+
+Enterprise Classifications Table:
+
+
+id: A unique identifier for each classification entry (auto-increment).
+enterprise_id: A foreign key that references the id in the enterprises table, linking the classification to its enterprise.
+classification_year: The year of classification.
+enterprise_type: The type of enterprise (e.g., Micro, Small).
+classification_date: The date of classification.
+s_no: A serial number for the classification entry.
+
+
+
+
+
+
+
+-- Create Enterprises Table
+CREATE TABLE enterprises (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    enterprise_name VARCHAR(255) NOT NULL,
+    organisation_type VARCHAR(255) NOT NULL,
+    date_of_incorporation DATE NOT NULL,
+    date_of_udyam_registration DATE NOT NULL
+);
+
+-- Create Unit Locations Table
+CREATE TABLE unit_locations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    enterprise_id INT,
+    unit_name VARCHAR(255) NOT NULL,
+    flat VARCHAR(255),
+    building VARCHAR(255),
+    village_town VARCHAR(255),
+    block VARCHAR(255),
+    road VARCHAR(255),
+    city VARCHAR(255),
+    pin VARCHAR(10),
+    state VARCHAR(255),
+    district VARCHAR(255),
+    sn INT,
+    FOREIGN KEY (enterprise_id) REFERENCES enterprises(id) ON DELETE CASCADE
+);
+
+-- Create Enterprise Classifications Table
+CREATE TABLE enterprise_classifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    enterprise_id INT,
+    classification_year VARCHAR(20) NOT NULL,
+    enterprise_type VARCHAR(50) NOT NULL,
+    classification_date DATE NOT NULL,
+    s_no INT,
+    FOREIGN KEY (enterprise_id) REFERENCES enterprises(id) ON DELETE CASCADE
+);
+
+
+Explanation of the Table Structure
+Enterprises Table:
+
+
+id: A unique identifier for each enterprise. This is an auto-incrementing integer.
+enterprise_name: A string (up to 255 characters) that holds the name of the enterprise.
+organisation_type: A string (up to 255 characters) that describes the type of organisation (e.g., Private Limited Company).
+date_of_incorporation: A date field that records when the enterprise was incorporated.
+date_of_udyam_registration: A date field that records when the enterprise was registered under UDYAM.
+
+Unit Locations Table:
+
+
+id: A unique identifier for each unit location. This is an auto-incrementing integer.
+enterprise_id: A foreign key that links to the id in the enterprises table, establishing a relationship between the unit location and its enterprise.
+unit_name: A string (up to 255 characters) holding the name of the unit.
+flat, building, village_town, block, road, city, pin, state, district: Various address fields that provide detailed location information for the unit.
+sn: An integer representing a serial number for the unit.
+
+Enterprise Classifications Table:
+
+
+id: A unique identifier for each classification entry. This is an auto-incrementing integer.
+enterprise_id: A foreign key that links to the id in the enterprises table, establishing a relationship between the classification and its enterprise.
+classification_year: A string (up to 20 characters) that indicates the year of classification.
+enterprise_type: A string (up to 50 characters) that describes the type of enterprise (e.g., Micro, Small).
+classification_date: A date field that records when the classification was made.
+s_no: An integer representing a serial number for the classification entry.
+
+
+
+ON DELETE CASCADE :
+The ON DELETE CASCADE constraint in SQL is used to maintain referential integrity between tables by automatically deleting rows in a child table when the corresponding rows in the parent table are deleted. This ensures that there are no orphaned records in the child table.
+
